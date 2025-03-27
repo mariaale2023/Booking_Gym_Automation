@@ -1,0 +1,37 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Selenium WebDriver binaries (optional, if stored locally)
+chromedriver
+geckodriver
+msedgedriver
+chromedriver.exe
+geckodriver.exe
+msedgedriver.exe
+
+# Virtual environment
+env/
+venv/
+ENV/
+.venv/
+.Python
+
+# VS Code settings
+.vscode/
+
+# Jupyter Notebook checkpoints (if using notebooks)
+.ipynb_checkpoints
+
+# Log files
+*.log
+
+# Python environment files
+*.env
+*.venv
+*.egg-info/
+
+# System files
+.DS_Store
+Thumbs.db
