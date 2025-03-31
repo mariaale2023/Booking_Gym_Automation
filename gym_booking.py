@@ -1,3 +1,8 @@
+#import .env file
+import os
+from dotenv import load_dotenv
+
+#import Selenium packeges
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
@@ -6,6 +11,14 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
+
+# Load the environment variables
+load_dotenv()
+
+BASE_URL = os.getenv("BASE_URL")
+USERNAME = os.getenv("USERNAME")
+PASSWORD = os.getenv("PASSWORD")
+CHROMEDRIVER_PATH = os.getenv("CHROMEDRIVER_PATH")   
 
 # Scroll helper function
 def scroll_to_element(driver, element):
@@ -38,6 +51,7 @@ change_button = WebDriverWait(driver, 15).until(
     EC.element_to_be_clickable((By.CSS_SELECTOR, "baf\\:button.cp-choose-club-desktop.baf-button"))
 )
 change_button.click()
+print("change button clicked")
 
 # Step 2: Wait until the dropdown becomes visible
 WebDriverWait(driver, 10).until(
@@ -50,6 +64,44 @@ facility_button = WebDriverWait(driver, 15).until(
     EC.element_to_be_clickable((By.XPATH, f"//a[contains(text(), '{facility_name}')]"))
 )
 facility_button.click()
+print("facility button clicked")
+
+
+# click on sing in button
+sign_in_button = WebDriverWait(driver, 15).until(
+#    EC.element_to_be_clickable((By.CSS_SELECTOR, "//span[contains(@class, 'cp-btn' and text(), ' Sign in ')]"))
+#    EC.element_to_be_clickable((By.XPATH, "//span[contains(@class, 'cp-btn' and text(), ' Sign in ')]"))
+    EC.element_to_be_clickable((By.XPATH, f"//span[contains(text(), 'Sign in')]"))
+)
+sign_in_button.click()
+print("sign in button clicked")
+
+# -- Wait for the login form to appear
+## Add user name
+login_input = WebDriverWait(driver, 10).until(
+    EC.presence_of_element_located((By.CSS_SELECTOR, "input[placeholder='Login']"))
+)
+login_input.send_keys(USERNAME)  # needs go to variables
+
+## Add password
+login_input = WebDriverWait(driver, 10).until(
+    EC.presence_of_element_located((By.CSS_SELECTOR, "input[placeholder='Password']"))
+)
+login_input.send_keys("password")  # variables
+
+## Click on the login button
+login_button = WebDriverWait(driver, 10).until(
+   # EC.element_to_be_clickable((By.CSS_SELECTOR, "baf\\:button.cp-btn-next.cp-login-btn-login.baf-button']"))
+   # EC.element_to_be_clickable((By.CSS_SELECTOR, "baf\\:button#confirm']"))
+    EC.element_to_be_clickable((By.XPATH, "//baf:button[@id='confirm']"))
+   # EC.element_to_be_clickable((By.CSS_SELECTOR, "div[class='auth-form-actions']"))
+    # EC.element_to_be_clickable(By.XPATH, f"//span[contains(text(), 'glyphicon')]")
+)
+driver.execute_script("arguments[0].click();", login_button)
+
+
+login_button.click()
+print("login button clicked")
 
 
 
