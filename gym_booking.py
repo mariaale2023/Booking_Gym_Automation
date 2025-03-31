@@ -30,7 +30,7 @@ driver = webdriver.Chrome(service=service)
 driver.set_window_size(1280, 1024)
 
 # Open the target page
-driver.get('https://recandsport.perfectgym.com/ClientPortal2/#/Classes/2/List?categoryId=1')
+driver.get(BASE_URL)
 
 # # Wait for the button's text to appear on the page
 # wait = WebDriverWait(driver, 15)
