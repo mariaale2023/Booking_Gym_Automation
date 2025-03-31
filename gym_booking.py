@@ -1,6 +1,7 @@
 #import .env file
-import os
+
 from dotenv import load_dotenv
+import os
 
 #import Selenium packeges
 from selenium import webdriver
@@ -15,10 +16,14 @@ import time
 # Load the environment variables
 load_dotenv()
 
+
 BASE_URL = os.getenv("BASE_URL")
-USERNAME = os.getenv("USERNAME")
+USERNAME = os.getenv("NAME")
 PASSWORD = os.getenv("PASSWORD")
 CHROMEDRIVER_PATH = os.getenv("CHROMEDRIVER_PATH")   
+
+print("username:", os.getenv("USERNAME"))
+print("DEBUG - USERNAME:", repr(USERNAME))
 
 # Scroll helper function
 def scroll_to_element(driver, element):
@@ -78,29 +83,42 @@ print("sign in button clicked")
 
 # -- Wait for the login form to appear
 ## Add user name
-login_input = WebDriverWait(driver, 10).until(
+username_input = WebDriverWait(driver, 10).until(
     EC.presence_of_element_located((By.CSS_SELECTOR, "input[placeholder='Login']"))
 )
-login_input.send_keys(USERNAME)  # needs go to variables
+username_input.click()
+username_input.clear()
+time.sleep(5)
+print("Username being sent:", USERNAME)
+
+
+
+#username_input.send_keys(USERNAME)  # needs go to variables
+username_input.send_keys(USERNAME)  # needs go to variables
 
 ## Add password
-login_input = WebDriverWait(driver, 10).until(
+password_input = WebDriverWait(driver, 10).until(
     EC.presence_of_element_located((By.CSS_SELECTOR, "input[placeholder='Password']"))
 )
-login_input.send_keys("password")  # variables
+password_input.clear()
+password_input.send_keys(PASSWORD)  # variables
 
 ## Click on the login button
 login_button = WebDriverWait(driver, 10).until(
    # EC.element_to_be_clickable((By.CSS_SELECTOR, "baf\\:button.cp-btn-next.cp-login-btn-login.baf-button']"))
+   # EC.element_to_be_clickable((By.CSS_SELECTOR, "baf\\:button.confirm.cp-btn-next.cp-login-btn-login.baf-button']"))
    # EC.element_to_be_clickable((By.CSS_SELECTOR, "baf\\:button#confirm']"))
-    EC.element_to_be_clickable((By.XPATH, "//baf:button[@id='confirm']"))
+
    # EC.element_to_be_clickable((By.CSS_SELECTOR, "div[class='auth-form-actions']"))
     # EC.element_to_be_clickable(By.XPATH, f"//span[contains(text(), 'glyphicon')]")
+    # EC.element_to_be_clickable((By.XPATH, "//baf:button[icon='cp-button-right']"))
+    # EC.element_to_be_clickable((By.XPATH, "//baf:button[id='confirm']"))
+    # EC.element_to_be_clickable((By.XPATH, "//baf:button[@id='confirm']"))
+     EC.element_to_be_clickable((By.XPATH, "//*[@id='confirm']"))
 )
 driver.execute_script("arguments[0].click();", login_button)
+#login_button.click() #dont click twice the buttom
 
-
-login_button.click()
 print("login button clicked")
 
 
