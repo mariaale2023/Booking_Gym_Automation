@@ -121,6 +121,46 @@ driver.execute_script("arguments[0].click();", login_button)
 
 print("login button clicked")
 
+## Click on book class buttom
+## struicture of HTMl
+# <div> class : 'cp-class-list-day-col
+   ## <div clas:calendar-item-content > [ >> <div calendar-item-content (hour)> <div class:calendar-item-info (classname)>]
+   ## <div  class : class-item-actions"> [< div class: cp-btn-classes-action]
+
+
+# Wait for classes to load
+WebDriverWait(driver, 10).until(
+    EC.presence_of_element_located((By.CSS_SELECTOR, "div.cp-class-list-day-col"))
+)
+print("Classes loaded")
+
+class_blocks = driver.find_elements(By.CSS_SELECTOR, "div.cp-class-list-day-col")
+print("class blocks found")
+print("Number of class blocks:", len(class_blocks))
+
+for block in class_blocks:
+    time_element = block.find_element(By.CSS_SELECTOR, ".calendar-item-start")
+    time_text = time_element.text.strip()
+    class_element = block.find_element(By.CSS_SELECTOR, ".calendar-item-name")
+    class_text = class_element.text.strip()
+
+    print("Block text:", time_text + " " + class_text)
+    # Check if the time text matches the desired time   
+    if time_text == "06:30 PM":
+        print("Found the desired time block")
+        # Click on the class block
+        
+#set variable
+target_time = "07.30 PM"
+target_class = "Burn Zone"
+
+# Check if the class text matches the desired class
+if time_element == target_time and class_element == target_class:
+    book_button = block.find_element(By.CSS_SELECTOR, ".cp-btn-classes-action")
+
+    print("Found the desired class bottoms block")
+  #
+    
 
 
 # Optional pause for visual confirmation
